@@ -25,13 +25,23 @@ class AIAnalyzer:
             formatted.append(f"""
 {i}. [{article['source']} - {article['region']}]
    Tiêu đề: {article['title']}
+   Link: {article.get('link', 'N/A')}
    Tóm tắt: {article.get('summary', 'N/A')[:200]}
 """)
         return "\n".join(formatted)
     
+    def _format_sources(self, articles: List[Dict]) -> str:
+        """Format danh sách nguồn tin với link"""
+        sources = []
+        for i, article in enumerate(articles[:15], 1):
+            title_short = article['title'][:60] + "..." if len(article['title']) > 60 else article['title']
+            sources.append(f"{i}. [{article['source']}] {title_short}\n   🔗 {article.get('link', 'N/A')}")
+        return "\n".join(sources)
+    
     def analyze_news(self, articles: List[Dict]) -> Dict:
         today = datetime.now().strftime("%Y-%m-%d")
         articles_text = self._format_articles_for_prompt(articles)
+        sources_text = self._format_sources(articles)
         
         prompt = f"""Bạn là chuyên gia phân tích chính trị và tài chính quốc tế.
 Hôm nay là {today}. Dựa trên tin tức 24 giờ qua, hãy phân tích và dự đoán.
@@ -101,11 +111,21 @@ Viết báo cáo tiếng Việt theo cấu trúc:
             
             analysis_text = response.choices[0].message.content
             
+            # Thêm phần nguồn tin vào cuối báo cáo
+            full_report = f"""{analysis_text}
+
+---
+
+## 📎 NGUỒN TIN ({len(articles[:15])} bài)
+
+{sources_text}
+"""
+            
             return {
                 "success": True,
                 "date": today,
                 "articles_analyzed": len(articles),
-                "report": analysis_text,
+                "report": full_report,
                 "tokens_used": response.usage.total_tokens
             }
             

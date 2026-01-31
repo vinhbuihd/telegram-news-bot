@@ -18,7 +18,7 @@ class AIAnalyzer:
     def __init__(self):
         genai.configure(api_key=config.GEMINI_API_KEY)
         # Sử dụng Gemini 1.5 Flash - nhanh và miễn phí
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.0-flash')
     
     def _format_articles_for_prompt(self, articles: List[Dict]) -> str:
         """Format articles into a structured text for the prompt"""

@@ -1,14 +1,5 @@
-# Telegram Bot
 python-telegram-bot==21.3
-
-# RSS Feed Parser
 feedparser==6.0.11
-
-# Google Gemini AI (FREE!)
-google-generativeai==0.8.3
-
-# Timezone handling
+groq==0.9.0
 pytz==2024.2
-
-# HTTP requests
 httpx==0.27.2

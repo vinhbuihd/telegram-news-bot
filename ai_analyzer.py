@@ -124,20 +124,3 @@ Viết báo cáo tiếng Việt theo cấu trúc:
 
 
 analyzer = AIAnalyzer()
-```
-
-5. Nhấn **Commit changes...** → **Commit changes**
-
----
-
-## Bước 4: Sửa file requirements.txt
-
-1. Nhấn vào file **requirements.txt**
-2. Nhấn ✏️ Edit
-3. **Xóa hết** và paste:
-```
-python-telegram-bot==21.3
-feedparser==6.0.11
-groq==0.9.0
-pytz==2024.2
-httpx==0.27.2
